@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'calendar_page.dart';
 
 
 
@@ -34,7 +35,7 @@ class _StartPageState extends State<StartPage> {
           onPressed: () { 
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => StartPage())
+              MaterialPageRoute(builder: (context) => CalendarPage())
             );
           },
           color: Colors.lightBlueAccent
@@ -55,8 +56,66 @@ class _StartPageState extends State<StartPage> {
           padding: EdgeInsets.only(left: 24.0, right: 24.0),
           children: <Widget>[
             logo,
-            SizedBox(height: 100.0,),
+            SizedBox(height: 150.0,),
             fotobutton
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+// Nächster Slide
+
+class CalendarPage extends StatefulWidget {
+  static String tag = 'calendar-page';
+  @override
+  _CalendarPageState createState() => new _CalendarPageState(); 
+}
+
+class _CalendarPageState extends State<CalendarPage> {
+  @override 
+  Widget build(BuildContext context) {
+
+    
+
+    final calendarbutton = Padding(
+      padding: EdgeInsets.symmetric(vertical: 16.0),
+      child: Material(
+        borderRadius: BorderRadius.circular(30.0),
+        shadowColor: Colors.lightBlueAccent.shade100,
+        elevation: 5.0,
+        child: FloatingActionButton(
+          onPressed: () {
+            return showDialog(
+              context: context,
+              builder: (context) {
+                return AlertDialog(
+                  content: Text(calendarservice.writeCalendar()),
+                );
+              },
+            );
+          }
+            
+          
+          
+          
+          
+        ),
+      ),
+    );
+
+    
+
+       
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: Center(
+        child: ListView(
+          shrinkWrap: true,
+          padding: EdgeInsets.only(left: 24.0, right: 24.0),
+          children: <Widget>[
+            calendarbutton
           ],
         ),
       ),
