@@ -46,6 +46,7 @@ flutter:
   assets:
      - assets/Intymelogo.JPG
      - assets/testocr.png
+     - assets/roundLogo.png
      
 
   # An image asset can refer to one or more resolution-specific "variants", see

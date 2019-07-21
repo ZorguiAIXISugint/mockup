@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'calendar_page.dart';
 
@@ -14,69 +15,120 @@ class _StartPageState extends State<StartPage> {
   @override 
   Widget build(BuildContext context) {
 
-    final logo = Hero(
-      tag: 'hero',
-      child: CircleAvatar(
-        backgroundColor: Colors.transparent,
-        radius: 48.0,
-        child: Image.asset('assets/Intymelogo.JPG'),
+    final logo = Material(
+      elevation: 4.0,
+      shape: CircleBorder(),
+      color: Colors.transparent,
+      child: Ink.image(
+        image: AssetImage('assets/Intymelogo.JPG'),
+        fit: BoxFit.cover,
+        width: 30.0,
+        height: 100.0,
+        child: InkWell(
+          onTap: () {},
+          child: null,
+        ),
       ),
     );
 
     final fotobutton = Padding(
       padding: EdgeInsets.symmetric(vertical: 16.0),
-      child: Material(
-        borderRadius: BorderRadius.circular(30.0),
-        shadowColor: Colors.lightBlueAccent.shade100,
-        elevation: 5.0,
-        child: MaterialButton(
-          height: 42.0,
-          minWidth: 200.0,
+        child: FloatingActionButton(
           onPressed: () { 
             Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => CalendarPage())
             );
           },
-          color: Colors.lightBlueAccent  
+          backgroundColor: Colors.lightGreen  
         ),
-      ),
-    );
+      );
+  
 
     final eventPageButton = Padding(
-      padding: EdgeInsets.symmetric(vertical: 16.0),
-      child: Material(
-        borderRadius: BorderRadius.circular(30.0),
-        shadowColor: Colors.lightBlueAccent.shade100,
-        elevation: 5.0,
-        child: MaterialButton(
-          height: 42.0,
-          minWidth: 200.0,
+      padding: EdgeInsets.symmetric(vertical: 0.0, horizontal: 50.0),
+        child: FlatButton(
           onPressed: () { 
             Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => EventPage())
             );
           },
-          color: Colors.lightBlueAccent  
-        ),
-      ),
-    ); 
+          child: Container(
+            child: Row(children: <Widget>[
+              Icon(
+                Icons.event_note,
+                color: Colors.white,
+                size: 20.0,
+              ),
+              SizedBox(
+                width: 10.0,
+              ),  
+              Text(
+              "Events",
+              style: TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+                fontSize: 20.0
+                )
+              )
+            ],)
+              )
+            ),
+          );
+          
+    //
+    final discoverPageButton = Padding(
+      padding: EdgeInsets.symmetric(vertical: 0.0, horizontal: 50.0),
+        child: FlatButton(
+          onPressed: () { 
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => EventPage())
+            );
+          },
+          child: Container(
+            child: Row(children: <Widget>[
+              Icon(
+                Icons.event,
+                color: Colors.white,
+                size: 20.0,
+              ),
+              SizedBox(
+                width: 10.0,
+              ),  
+              Text(
+              "Discover",
+              style: TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+                fontSize: 20.0
+                )
+              )
+            ],)
+              )
+            ),
+          );      
+           
+      
+     
 
     
 
        
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Colors.grey[900],
       body: Center(
         child: ListView(
           shrinkWrap: true,
           padding: EdgeInsets.only(left: 24.0, right: 24.0),
           children: <Widget>[
             logo,
-            SizedBox(height: 150.0,),
-            fotobutton,
-            eventPageButton
+            SizedBox(height: 220.0,),
+            eventPageButton,
+            discoverPageButton,
+            SizedBox(height: 80.0,),
+            fotobutton
           ],
         ),
       ),
@@ -106,6 +158,7 @@ class _CalendarPageState extends State<CalendarPage> {
         elevation: 5.0,
         child: FloatingActionButton(
           onPressed: () {
+            // Hier muss in die Firebase Datenbank geschrieben werden
             return showDialog(
               context: context,
               builder: (context) {
@@ -134,6 +187,9 @@ class _CalendarPageState extends State<CalendarPage> {
           shrinkWrap: true,
           padding: EdgeInsets.only(left: 24.0, right: 24.0),
           children: <Widget>[
+            SizedBox(
+              height: 400.0,
+            ),
             calendarbutton
           ],
         ),
@@ -178,6 +234,7 @@ class _EventPageState extends State<EventPage> {
       margin: EdgeInsets.symmetric(vertical: 20.0),
           height: 550.0,
           child: ListView.builder(
+            
             scrollDirection: Axis.horizontal,
             itemCount: eventEntries.length,
             itemBuilder: (BuildContext context, int index) {
@@ -191,6 +248,7 @@ class _EventPageState extends State<EventPage> {
                 child: Column(children: <Widget>[
                   Image.asset('assets/testocr.png'),
                   //FlutterLogo(size: 400.0),
+                  // Text wird aus der Firebase Datenbank abgerufen
                   Flexible(
                     child: Text("Name of the Event",
                      style: new TextStyle(
